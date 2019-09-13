@@ -17,8 +17,8 @@ FSJS project 2 - List Filter and Pagination
    scoped to that function.
 ***/
 
-
-
+const studentList = document.querySelectorAll('li');
+const studentsPerPage = 10;
 
 /*** 
    Create the `showPage` function to hide all of the items in the 
@@ -32,16 +32,26 @@ FSJS project 2 - List Filter and Pagination
        you initially define the function, and it acts as a variable 
        or a placeholder to represent the actual function `argument` 
        that will be passed into the parens later when you call or 
-       "invoke" the function 
-***/
+       "invoke" the function
+***/ 
 
-
+const showPage = (list, page) => {
+   const startIndex =  (page * studentsPerPage) - studentsPerPage;
+   const endIndex = page * studentsPerPage;
+   for (i = 0; i <= studentList.length; i =+ 1){
+      if (startIndex <= studentList[i] && studentList[i] <= endIndex) {
+         return studentList;
+      }
+   }
+}
+console.log(showPage(studentList, 1));
 
 
 /*** 
    Create the `appendPageLinks function` to generate, append, and add 
    functionality to the pagination buttons.
 ***/
+
 
 
 
