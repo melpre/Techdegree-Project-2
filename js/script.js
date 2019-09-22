@@ -17,7 +17,8 @@ FSJS project 2 - List Filter and Pagination
    scoped to that function.
 ***/
 
-const studentList = document.querySelectorAll('li');
+// DECLARED GLOBAL VARIABLES
+const studentList = document.querySelectorAll('.student-item');
 const studentsPerPage = 10;
 
 /*** 
@@ -25,7 +26,7 @@ const studentsPerPage = 10;
    list except for the ten you want to show.
 
    Pro Tips: 
-     - Keep in mind that with a list of 54 students, the last page 
+     - Keep in mind that with a list of 44 students, the last page 
        will only display four.
      - Remember that the first student has an index of 0.
      - Remember that a function `parameter` goes in the parens when 
@@ -35,16 +36,19 @@ const studentsPerPage = 10;
        "invoke" the function
 ***/ 
 
+//SHOW PAGE FUNCTION
 const showPage = (list, page) => {
-   const startIndex =  (page * studentsPerPage) - studentsPerPage;
-   const endIndex = page * studentsPerPage;
-   for (i = 0; i <= studentList.length; i =+ 1){
-      if (startIndex <= studentList[i] && studentList[i] <= endIndex) {
-         return studentList;
-      }
-   }
-}
-console.log(showPage(studentList, 1));
+   let startIndex = (page * studentsPerPage) - studentsPerPage;
+   let endIndex = page * studentsPerPage;
+
+   for (let i = 0; i < list.length; i += 1) {
+      if (startIndex <= i && i < endIndex) {
+         studentList[i].style.display = 'block';
+      } else { 
+         studentList[i].style.display = 'none';
+      };
+   };
+};
 
 
 /*** 
@@ -52,9 +56,44 @@ console.log(showPage(studentList, 1));
    functionality to the pagination buttons.
 ***/
 
+//APPEND PAGE LINKS FUNCTION
+const appendPageLinks = (list) => {
+   // Determines number of page links needed and creates the div and ul
+   let pageLinks = (list.length / studentsPerPage) + 1;
+   const divPage = document.querySelector('.page');
+   const div = document.createElement('div');
+   const ul = document.createElement('ul');
+   div.className = 'pagination';
+   divPage.appendChild(div);
+   div.appendChild(ul);
+
+   //Creates li elements nested in ul
+   for (let i = 0; i < pageLinks; i += 1) {
+      const li = document.createElement('li');
+      const a = document.createElement('a');
+      ul.appendChild(li)[i];
+      li.appendChild(a)[i];
+      for (let j = 0; j < a.length; j += 1) {
+      a[j].textContent = a[j] + 1;
+      a[j].setAttribute('href', '#');
+      };
+   };
+
+   /***a[0].className = 'active';
+   a.addEventListener('click', (event) => {
+      for (let i = 0; i < a.length; i += 1) {
+         a[i].classList.remove('active');
+         let pageClick = event.target;
+         pageClick.classList.add('active');
+         showPage(studentList, a.textContent);
+      };
+   });***/
+}
+
+appendPageLinks(studentList);
 
 
 
 
 
-// Remember to delete the comments that came with this file, and replace them with your own code comments.
+
