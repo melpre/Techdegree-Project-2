@@ -67,27 +67,29 @@ const appendPageLinks = (list) => {
    divPage.appendChild(div);
    div.appendChild(ul);
 
-   //Creates li elements nested in ul
+   //Creates li and a elements nested in ul
    for (let i = 0; i < pageLinks; i += 1) {
       const li = document.createElement('li');
       const a = document.createElement('a');
+      a.textContent = i + 1;
+      a.setAttribute = ('href', '#');
       ul.appendChild(li)[i];
       li.appendChild(a)[i];
-      for (let j = 0; j < a.length; j += 1) {
-      a[j].textContent = a[j] + 1;
-      a[j].setAttribute('href', '#');
-      };
    };
 
-   /***a[0].className = 'active';
-   a.addEventListener('click', (event) => {
-      for (let i = 0; i < a.length; i += 1) {
-         a[i].classList.remove('active');
+   //Event handler for page links
+   const aPageLinks = document.querySelectorAll('a');
+   aPageLinks[0].className = 'active';
+
+   //ERROR AT THIS POINT. EVENT HANDLER NOT RECOGNIZED AS A FUNCTION.
+   aPageLinks.addEventListener('click', (event) => {
+      for (let i = 0; i < aPageLinks.length; i += 1) {
+         aPageLinks[i].classList.remove('active');
          let pageClick = event.target;
-         pageClick.classList.add('active');
-         showPage(studentList, a.textContent);
+         pageClick.className.add('active');
+         showPage(studentList, aPageLinks[i].textContent);
       };
-   });***/
+   });
 }
 
 appendPageLinks(studentList);
