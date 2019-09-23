@@ -84,10 +84,10 @@ const appendPageLinks = (list) => {
    //ERROR AT THIS POINT. EVENT HANDLER NOT RECOGNIZED AS A FUNCTION.
    aPageLinks.addEventListener('click', (event) => {
       for (let i = 0; i < aPageLinks.length; i += 1) {
-         aPageLinks[i].classList.remove('active');
+         aPageLinks[i].classList.remove("active");
          let pageClick = event.target;
-         pageClick.className.add('active');
-         showPage(studentList, aPageLinks[i].textContent);
+         pageClick.className = 'active';
+         showPage(studentList, pageClick.textContent);
       };
    });
 }
