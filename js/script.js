@@ -6,35 +6,11 @@ FSJS project 2 - List Filter and Pagination
 // Study guide for this project - https://drive.google.com/file/d/1OD1diUsTMdpfMDv677TfL1xO2CEkykSz/view?usp=sharing
 
 
-/*** 
-   Add your global variables that store the DOM elements you will 
-   need to reference and/or manipulate. 
-   
-   But be mindful of which variables should be global and which 
-   should be locally scoped to one of the two main functions you're 
-   going to create. A good general rule of thumb is if the variable 
-   will only be used inside of a function, then it can be locally 
-   scoped to that function.
-***/
 
 // DECLARED GLOBAL VARIABLES
 const studentList = document.querySelectorAll('.student-item');
 const studentsPerPage = 10;
 
-/*** 
-   Create the `showPage` function to hide all of the items in the 
-   list except for the ten you want to show.
-
-   Pro Tips: 
-     - Keep in mind that with a list of 44 students, the last page 
-       will only display four.
-     - Remember that the first student has an index of 0.
-     - Remember that a function `parameter` goes in the parens when 
-       you initially define the function, and it acts as a variable 
-       or a placeholder to represent the actual function `argument` 
-       that will be passed into the parens later when you call or 
-       "invoke" the function
-***/ 
 
 //SHOW PAGE FUNCTION
 const showPage = (list, page) => {
@@ -51,15 +27,10 @@ const showPage = (list, page) => {
 };
 
 
-/*** 
-   Create the `appendPageLinks function` to generate, append, and add 
-   functionality to the pagination buttons.
-***/
-
 //APPEND PAGE LINKS FUNCTION
 const appendPageLinks = (list) => {
    // Determines number of page links needed and creates the div and ul
-   let pageLinks = (list.length / studentsPerPage) + 1;
+   let pageLinks = (list.length / studentsPerPage);
    const divPage = document.querySelector('.page');
    const div = document.createElement('div');
    const ul = document.createElement('ul');
@@ -81,18 +52,84 @@ const appendPageLinks = (list) => {
    const aPageLinks = document.querySelectorAll('a');
    aPageLinks[0].className = 'active';
 
-   //ERROR AT THIS POINT. EVENT HANDLER NOT RECOGNIZED AS A FUNCTION.
-   aPageLinks.addEventListener('click', (event) => {
-      for (let i = 0; i < aPageLinks.length; i += 1) {
+   //Click event handler for pagination links
+   for (let i = 0; i < aPageLinks.length; i += 1) {
+      aPageLinks[i].addEventListener ('click', (event) => {
          aPageLinks[i].classList.remove("active");
          let pageClick = event.target;
-         pageClick.className = 'active';
+         pageClick.classList.add("active");
          showPage(studentList, pageClick.textContent);
-      };
-   });
+      });
+   };
 }
 
+showPage(studentList, 1);
 appendPageLinks(studentList);
+
+// EXTRA CREDIT
+
+/*** Add functionality to the search component
+When the "Search" button is clicked, the list is filtered by student name for those that include 
+the search value. For example, if the name Phillip is typed into the box, list all items with a name 
+that includes Phillip. If the letter S is typed in, all items with an S in the name will show.
+
+Pro Tip: To improve the functionality and add to the user experience, consider adding a keyup event 
+listener to the search input so that the list filters in real time as the user types. This would be 
+in addition to making the search button clickable since pasting text into the search bar might not 
+trigger the keyup event.
+
+Project Warm Up: Configuring a search feature can seem complex at first, but it's really just a few 
+fundamental steps. For some helpful practice, check out the project Warm Up Simple Search.
+
+Paginate search results
+Display pagination links based on how many search results are returned. For example: if 10 or fewer 
+results are returned, 0 or 1 pagination links are displayed. If 22 search results are returned, 3 pagination links are displayed.
+
+Pro Tip: To paginate the search results, try storing the search results in an array that can act as 
+a list, on which you can call your functions to show a page and append pagination links.
+
+Handle no results returned
+If no matches are found by the search, include a message in the HTML to tell the user there are no matches.
+
+Note Don't use the built in alert() method here. The "No results" message must be printed to the page. ***/
+
+
+
+// Creates elements of the Search Bar
+const h2 = document.querySelector('h2');
+const studentSearchDiv = document.createElement('div');
+studentSearchDiv.classList.add("student-search");
+const studentSearchInput = document.createElement('input');
+studentSearchInput.placeholder = "Search for students...";
+const studentSearchButton = document.createElement('button');
+studentSearchButton.textContent = "Search";
+h2.insertAdjacentElement('afterend', studentSearchDiv);
+studentSearchDiv.appendChild(studentSearchInput);
+studentSearchDiv.appendChild(studentSearchButton);
+
+
+// Search Bar function
+const studentSearch = (searchInput, names) => {
+   for (let i = 0; i < names.length; i += 1) {
+      names[i].classList.remove("match");
+      if (0 !== studentSearchInput.value.toLowerCase() && studentSearchInput.value.toLowerCase() <= names[i].textContent.toLowerCase()) {
+         names[i].classList.add("match");
+      };
+   };
+};
+
+
+// Search Bar function invoked
+studentSearchInput.addEventListener('keyup', (event) => {
+   studentSearch(studentSearchInput, studentList);
+});
+studentSearchButton.addEventListener('click', (event) => {
+   event.preventDefault();
+   studentSearch(studentSearchInput, studentList);
+});
+
+
+
 
 
 
