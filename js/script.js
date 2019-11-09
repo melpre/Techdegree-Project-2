@@ -19,9 +19,9 @@ const showPage = (list, page) => {
 
    for (let i = 0; i < list.length; i += 1) {
       if (startIndex <= i && i < endIndex) {
-         studentList[i].style.display = 'block';
+         list[i].style.display = 'block';
       } else { 
-         studentList[i].style.display = 'none';
+         list[i].style.display = 'none';
       };
    };
 };
@@ -82,23 +82,23 @@ studentSearchDiv.appendChild(searchBar);
 studentSearchDiv.appendChild(searchButton);
 
 // SEARCH BAR FUNCTION
-let searchResults = [];
 const nameSearch = (searchInput, names) => {
    for (let i = 0; i < names.length; i += 1) {
       names[i].classList.remove("student-search");
       if (0 != searchInput.value.length && names[i].textContent.toLowerCase().includes(searchInput.value.toLowerCase())) {
          names[i].classList.add("student-search");
-         searchResults += names[i];
-         return searchResults;
       };
    };
 };
+
+//PAGINATION SEARCH RESULTS DISPLAY
+let searchResults = document.querySelectorAll('li.student-search');
 
 // SEARCH FUNCTION EVENT LISTENERS:
    /* SEARCH BUTTON LISTENER */
       searchButton.addEventListener('click', (event) => {
          nameSearch(searchBar, studentList);
-         showPage(searchResults, 1);
+         showPage(searchResults, searchResults.length);
          appendPageLinks(searchResults);
          //console.log('Submit button is functional');
       });
@@ -106,11 +106,10 @@ const nameSearch = (searchInput, names) => {
    /* SEARCH INPUT LISTENER */
       searchBar.addEventListener('keyup', (event) => {
          nameSearch(searchBar, studentList);
-         showPage(searchResults, 1);
+         showPage(searchResults, searchResults.length);
          appendPageLinks(searchResults);
          //console.log('Keyup event on the search input is functional');
       });
-
 
 /*** IN PROGRESS Paginate search results 
 Display pagination links based on how many search results are returned. For example: if 10 or fewer 
