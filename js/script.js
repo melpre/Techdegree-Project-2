@@ -51,15 +51,15 @@ const appendPageLinks = (list) => {
    aPageLinks[0].className = 'active';
 
    //Click event handler for pagination links
-   for (let i = 0; i < aPageLinks.length; i += 1) {
-      aPageLinks[i].addEventListener ('click', (event) => {
+   ul.addEventListener ('click', (event) => {
+      for (let i = 0; i < aPageLinks.length; i += 1) {
          aPageLinks[i].classList.remove("active");
          let pageClick = event.target;
          pageClick.classList.add("active");
          showPage(studentList, pageClick.textContent);
-      });
-   };
-}
+      };
+     });
+};
 
 showPage(studentList, 1);
 appendPageLinks(studentList);
